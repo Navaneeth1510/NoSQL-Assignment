@@ -15,10 +15,6 @@ const StudentSchema = mongoose.Schema(
             type: Date, 
             required: true 
         },
-        className: { 
-            type: String, 
-            required: true 
-        }, 
         subjects: [{
             type: String 
         }], 

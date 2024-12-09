@@ -12,7 +12,6 @@ mongoose.connect(mongoDBURL, {
     .then(() => console.log('MongoDB connected...'))
     .catch(err => console.log('Failed to connect to MongoDB:', err.message));
 
-
 //aggreagtion pipeline used to calculate the number of students in each class
 router.get("/student_count", async (req, res) => {
     try {
@@ -23,10 +22,8 @@ router.get("/student_count", async (req, res) => {
                     subjects: { $exists: true, $ne: [] },
                 },
             },
-
             //phase 2: create a document for each subject
             { $unwind: "$subjects" },
-
             //phase 3: grp by subject name and calcuate the number of students for each subject
             {
                 $group: {
@@ -36,12 +33,11 @@ router.get("/student_count", async (req, res) => {
                         $push: {
                             name: "$name",
                             email: "$email",
-                            className: "$className",
+                            className: "$standard",
                         },
                     },
                 },
             },
-
             //phase 4: handles the way tghe op shd be displayed
             {
                 $project: {
@@ -52,7 +48,6 @@ router.get("/student_count", async (req, res) => {
                 },
             },
         ]);
-
         res.status(200).json(result);
     } catch (err) {
         res.status(500).json({ error: err.message });

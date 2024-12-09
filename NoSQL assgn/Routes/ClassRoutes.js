@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { mongoDBURL, PORT } from './MongoDB.js';
+import { mongoDBURL } from './MongoDB.js';
 import { Class } from '../Schemas/ClassSchema.js';
 
 const router = express.Router();

@@ -51,19 +51,15 @@ router.put('/:email', async (req, res) => {
     try {
         const { email } = req.params;
         const { subject } = req.body;
-
         if (!subject)
             return res.status(400).json({ error: 'Subject is required to update' });
-
         const updatedStudent = await Student.findOneAndUpdate(
             { email },
             { $addToSet: { subjects: subject } },
             { new: true }
         );
-
         if (!updatedStudent)
             return res.status(404).json({ error: 'Student not found' });
-
         res.status(200).json(updatedStudent);
     } catch (err) {
         res.status(400).json({ error: err.message });
